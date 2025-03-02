@@ -16,11 +16,17 @@ gleam add glee@2
 Getting a string:
 ```gleam
 import glee
+import gleam/io
+import gleam/result
 
 pub fn main() {
   let json = "{\"name\":\"John\",\"age\":30}"
   let result = glee.parse_json_string(json, "name")
-  io.println("Name: " <> result)
+  
+  case result {
+    Ok(name) -> io.println("Name: " <> name)
+    Error(reason) -> io.println("Error: " <> reason)
+  }
 }
 ```
 
