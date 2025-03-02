@@ -27,53 +27,56 @@ pub fn parse_json_string_test() {
   |> should.equal("Error")
 }
 
-// Test for parse_json_number function
-pub fn parse_json_number_test() {
+// Test for parse_json_float function
+pub fn parse_json_float_test() {
   // Test with valid JSON
   let json = "{\"age\":30.5,\"score\":99}"
-  let result = glee.parse_json_number(json, "age")
+  let result = glee.parse_json_float(json, "age")
   result
   |> should.equal(Ok(30.5))
 
   // Test with invalid field
-  let result = glee.parse_json_number(json, "invalid_field")
+  let result = glee.parse_json_float(json, "invalid_field")
   result
-  |> should.equal(Error("Failed to parse number"))
+  |> should.equal(Error("Failed to parse float"))
 
   // Test with invalid JSON
   let invalid_json = "{invalid_json"
-  let result = glee.parse_json_number(invalid_json, "age")
+  let result = glee.parse_json_float(invalid_json, "age")
   result
-  |> should.equal(Error("Failed to parse number"))
+  |> should.equal(Error("Failed to parse float"))
 
   // Test with non-numeric field
   let json = "{\"name\":\"John\",\"age\":30.5}"
-  let result = glee.parse_json_number(json, "name")
+  let result = glee.parse_json_float(json, "name")
   result
-  |> should.equal(Error("Failed to parse number"))
+  |> should.equal(Error("Failed to parse float"))
 }
 
-// Test for float_to_string function
-pub fn float_to_string_test() {
-  // Test with integer value
-  let result = glee.float_to_string(42.0)
+// Test for parse_json_int function
+pub fn parse_json_int_test() {
+  // Test with valid JSON
+  let json = "{\"age\":30,\"score\":99}"
+  let result = glee.parse_json_int(json, "age")
   result
-  |> should.equal("42.0")
+  |> should.equal(Ok(30))
 
-  // Test with one decimal place
-  let result = glee.float_to_string(42.5)
+  // Test with invalid field
+  let result = glee.parse_json_int(json, "invalid_field")
   result
-  |> should.equal("42.5")
+  |> should.equal(Error("Failed to parse integer"))
 
-  // Test with multiple decimal places (should truncate to 1)
-  let result = glee.float_to_string(42.567)
+  // Test with invalid JSON
+  let invalid_json = "{invalid_json"
+  let result = glee.parse_json_int(invalid_json, "age")
   result
-  |> should.equal("42.5")
+  |> should.equal(Error("Failed to parse integer"))
 
-  // Test with negative value
-  let result = glee.float_to_string(-42.567)
+  // Test with non-numeric field
+  let json = "{\"name\":\"John\",\"age\":30.5}"
+  let result = glee.parse_json_int(json, "name")
   result
-  |> should.equal("-42.5")
+  |> should.equal(Error("Failed to parse integer"))
 }
 
 // Test for extract_value_from_json function

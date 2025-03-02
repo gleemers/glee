@@ -7,7 +7,6 @@
 //// could be done better.
 
 import gleam/dynamic/decode
-import gleam/float
 import gleam/json
 import gleam/string
 
@@ -32,11 +31,9 @@ pub fn parse_json_string(json: String, field: String) -> String {
   }
 }
 
-/// Parse the JSON string and return
-/// the value of the given field.
 /// Parse a JSON string and return
 /// the float value of a given field.
-pub fn parse_json_number(json: String, field: String) -> Result(Float, String) {
+pub fn parse_json_float(json: String, field: String) -> Result(Float, String) {
   // Parse the JSON string and return
   // the value of the given field.
   let json_decoder = {
@@ -53,32 +50,30 @@ pub fn parse_json_number(json: String, field: String) -> Result(Float, String) {
   // Return the value of the given field.
   case json_result {
     Ok(value) -> Ok(value)
-    Error(_) -> Error("Failed to parse number")
+    Error(_) -> Error("Failed to parse float")
   }
 }
 
-/// Convert a float to a string with 1 decimal place
-pub fn float_to_string(value: Float) -> String {
-  // Convert the float to a string with 1 decimal place
-  float.to_string(value)
-  |> string.split(".")
-  |> fn(parts) {
-    // Split the string into whole and decimal parts
-    case parts {
-      [whole, decimal] -> {
-        // If the decimal part is empty, return the whole part
-        let short_decimal = case string.length(decimal) {
-          0 -> decimal
-          _ -> string.slice(from: decimal, at_index: 0, length: 1)
-        }
+/// Parse a JSON string and return
+/// the int value of a given field.
+pub fn parse_json_int(json: String, field: String) -> Result(Int, String) {
+  // Parse the JSON string and return
+  // the value of the given field.
+  let json_decoder = {
+    use json <- decode.field(field, decode.int)
+    decode.success(json)
+  }
 
-        // Return the whole part and the short decimal part
-        whole <> "." <> short_decimal
-      }
+  // Parse the JSON string and return
+  // the value of the given field.
+  let json_result =
+    json
+    |> json.parse(json_decoder)
 
-      // If the string is not split, return the original string
-      _ -> float.to_string(value)
-    }
+  // Return the value of the given field.
+  case json_result {
+    Ok(value) -> Ok(value)
+    Error(_) -> Error("Failed to parse integer")
   }
 }
 
