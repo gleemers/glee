@@ -1,6 +1,6 @@
 name = "glee"
 version = "2.1.0"
-repository = { type = "github", user = "thoq-jar", repo = "glee" }
+repository = { type = "github", user = "gleamers", repo = "glee" }
 description = "A Gleam library for parsing JSON"
 licences = ["MIT"]
 # links = [{ title = "Website", href = "" }]
