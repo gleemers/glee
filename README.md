@@ -13,6 +13,10 @@ are things I could do better
 gleam add glee@2
 ```
 
+## Decoding JSON
+
+Glee also provides functions to decode JSON into values:
+
 Getting a string:
 ```gleam
 import glee
@@ -65,6 +69,47 @@ pub fn main() {
   }
 }
 ```
+
+## Encoding JSON
+
+Glee also provides functions to encode values into JSON:
+
+```gleam
+import glee
+import gleam/io
+import gleam/dict
+
+pub fn main() {
+  // Encode simple values
+  let string_json = glee.encode_string("hello")  // "hello"
+  let int_json = glee.encode_int(42)  // 42
+  let float_json = glee.encode_float(3.14)  // 3.14
+  let bool_json = glee.encode_bool(True)  // true
+  
+  // Create a simple JSON object
+  let person = glee.create_json_object("name", glee.encode_string("Alice"))
+  io.println(person)  // {"name":"Alice"}
+  
+  // Create a JSON object from multiple pairs
+  let pairs = [
+    #("name", glee.encode_string("Bob")),
+    #("age", glee.encode_int(30)),
+    #("active", glee.encode_bool(True))
+  ]
+  let complex_person = glee.create_json_object_from_pairs(pairs)
+  io.println(complex_person)  // {"name":"Bob","age":30,"active":true}
+  
+  // Create a JSON array
+  let values = [
+    glee.encode_string("apple"),
+    glee.encode_string("banana"),
+    glee.encode_string("cherry")
+  ]
+  let fruits = glee.encode_list(values)
+  io.println(fruits)  // ["apple","banana","cherry"]
+}
+```
+
 Further documentation can be found at <https://hexdocs.pm/glee>.
 
 ## Development
