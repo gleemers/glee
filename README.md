@@ -10,7 +10,7 @@ are things I could do better
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/glee/)
 
 ```sh
-gleam add glee@1
+gleam add glee@2
 ```
 
 Getting a string:

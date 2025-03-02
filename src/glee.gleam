@@ -12,7 +12,7 @@ import gleam/string
 
 /// Parse a JSON string and return
 /// the string value of a given field.
-pub fn parse_json_string(json: String, field: String) -> String {
+pub fn parse_json_string(json: String, field: String) -> Result(String, String) {
   let json_decoder = {
     use json <- decode.field(field, decode.string)
     decode.success(json)
@@ -26,8 +26,8 @@ pub fn parse_json_string(json: String, field: String) -> String {
 
   // Return the value of the given field.
   case json_result {
-    Ok(json_result) -> json_result
-    Error(_) -> "Error"
+    Ok(json_result) -> Ok(json_result)
+    Error(_) -> Error("Failed to parse string")
   }
 }
 

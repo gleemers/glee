@@ -13,18 +13,18 @@ pub fn parse_json_string_test() {
   let json = "{\"name\":\"John\",\"age\":30}"
   let result = glee.parse_json_string(json, "name")
   result
-  |> should.equal("John")
+  |> should.equal(Ok("John"))
 
   // Test with invalid field
   let result = glee.parse_json_string(json, "invalid_field")
   result
-  |> should.equal("Error")
+  |> should.equal(Error("Failed to parse string"))
 
   // Test with invalid JSON
   let invalid_json = "{invalid_json"
   let result = glee.parse_json_string(invalid_json, "name")
   result
-  |> should.equal("Error")
+  |> should.equal(Error("Failed to parse string"))
 }
 
 // Test for parse_json_float function
