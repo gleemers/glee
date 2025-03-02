@@ -234,3 +234,9 @@ pub fn create_json_object_from_pairs_test() {
   |> string.ends_with("}")
   |> should.be_true
 }
+
+pub fn parse_json_bool_test() {
+  let result = glee.parse_json_bool("{\"active\":true}", "active")
+  result
+  |> should.equal(Ok(True))
+}

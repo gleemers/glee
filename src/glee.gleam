@@ -203,3 +203,26 @@ pub fn create_json_object_from_pairs(pairs: List(#(String, String))) -> String {
   let values = dict.from_list(pairs)
   encode_object(values)
 }
+
+/// Parse a JSON string and return
+/// the boolean value of a given field.
+pub fn parse_json_bool(json: String, field: String) -> Result(Bool, String) {
+  // Parse the JSON string and return
+  // the value of the given field.
+  let json_decoder = {
+    use json <- decode.field(field, decode.bool)
+    decode.success(json)
+  }
+
+  // Parse the JSON string and return
+  // the value of the given field.
+  let json_result =
+    json
+    |> json.parse(json_decoder)
+
+  // Return the value of the given field.
+  case json_result {
+    Ok(value) -> Ok(value)
+    Error(_) -> Error("Failed to parse boolean")
+  }
+}
